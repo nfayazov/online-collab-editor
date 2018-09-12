@@ -1,0 +1,21 @@
+textarea {
+   resize: none;
+}
+
+.existing-code {
+   overflow: scroll;
+   border: none;
+}
+
+.changes {
+   display: none;
+}
+
+.btn {
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
+
+.commit-btn {
+   background-color: brown;
+}

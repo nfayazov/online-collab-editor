@@ -2,14 +2,31 @@
   "name": "live-editor",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha server/tests/*.test.js",
+    "test-watch": "nodemon --exec 'npm test'"
   },
   "author": "Nadir Fayazov",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3"
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "hbs": "^4.0.1",
+    "mongoose": "^5.2.9",
+    "nodemon": "^1.18.3",
+    "passport": "^0.4.0",
+    "passport-github2": "^0.1.11",
+    "unix-timestamp": "^0.2.0"
+  },
+  "devDependencies": {
+    "expect": "^23.6.0",
+    "mocha": "^5.2.0",
+    "passport-strategy": "^1.0.0",
+    "socket.io": "^2.1.1",
+    "supertest": "^3.3.0"
   }
 }

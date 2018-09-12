@@ -1,0 +1,40 @@
+<html>
+   <head>
+      <title>Live Editor</title>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/styles/styles.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   </head>
+   <body>
+      <div class="container">
+         <div class="row">
+            <img class="md-col-4" src="{{avatar_url}}" height="300" width="300"></h3>
+            <h3 class="md-col-4">Name: {{name}}</h3>
+            <h3 class="md-col-4">Username: {{username}}</h3>
+            {{#if bio}}
+               <h3 class="md-col-4">Bio: {{bio}}</h3>
+            {{/if}}
+            {{#if workspaces}}
+               <h3 class="md-col-4">Workspaces: </h3>
+            {{/if}}
+            <ul>
+               {{#each workspaces}}
+                  <li>
+                     <a href="/workspace/{{this._id}}">
+                        <h3>{{this.name}}</h3>
+                     </a>
+                  </li>
+               {{/each}}   
+            </ul>
+            <a href="/new">
+               <div  class="btn btn-primary new-workspace">Create New Workspace</div>
+            </a>
+         </div>
+      </div>
+      <script type="text/javascript" src='/js/ajax-functions.js'></script>
+      <!---<script type="text/javascript" src='js/userController.js'></script>-->
+   </body>
+</html>

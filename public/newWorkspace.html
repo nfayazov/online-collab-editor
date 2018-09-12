@@ -1,0 +1,33 @@
+<html>
+
+<head>
+   <title>Live Workspace</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <link rel="stylesheet" href="/styles/styles.css" type="text/css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+   <div class="container">
+      <div class="row">
+         <h1>Let's create a new workspace!</h1>
+         <form>
+            <div class="input-group">
+               <span class="input-group-addon">Name</span>
+               <input id="ws-name" type="text" class="form-control" placeholder="Todo List">
+            </div>
+            <div class="input-group">
+               <span class="input-group-addon">File Name</span>
+               <input id="ws-file" type="text" class="form-control" placeholder="index.js">
+            </div>
+            <div class="input-group">
+               <span class="input-group-addon">Description</span>
+               <input id="ws-desc" type="text" class="form-control" placeholder="An app to track your tasks.">
+            </div>
+            <div id="save-btn" class="btn btn-primary">Save</div>
+         </form>
+      </div>
+   </div>
+   <script type="text/javascript" src="/js/newWorkspaceController.js"></script>
+</body>
+</html>

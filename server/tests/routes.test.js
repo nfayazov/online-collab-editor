@@ -34,7 +34,9 @@ describe('Server', () => {
          .end(done);
    });
    it('should get workspaces by user id', (done) => {
-         expect(getWorkspacesByGithubId('14299057', null)).toBeGreaterThan(0).done();
+         getWorkspacesByGithubId('14299057').then((workspaces) => {
+            expect(workspaces.length).toBeGreaterThan(0);
+         }).then(done, done);
    });
 
 });

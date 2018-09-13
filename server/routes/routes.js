@@ -30,7 +30,7 @@ module.exports = function(app, passport) {
       
    app.route('/profile')
       .get(isLoggedIn, function (req, res) {
-         getWorkspacesByGithubId(req.user.github.id, res).then((workspaces) => {
+         getWorkspacesByGithubId(req.user.github.id).then((workspaces) => {
             res.render(path + 'views/profile.hbs', {
                name: req.user.github.displayName,
                username: req.user.github.username,
@@ -44,7 +44,7 @@ module.exports = function(app, passport) {
       });
 
    // Add this to some util file
-   let getWorkspacesByGithubId = (id, res) => {
+   let getWorkspacesByGithubId = (id) => {
       return User.findOne({ 'github.id': id }).then((user) => {
          return Promise.all(user.workspaces.map((ws) => {
             return Workspace.findById(ws).then((wsRecord) => {
@@ -52,7 +52,7 @@ module.exports = function(app, passport) {
             });
          }))
       }, (e) => {
-         res.status(404).send(e);
+         return e;
       });
    };
 

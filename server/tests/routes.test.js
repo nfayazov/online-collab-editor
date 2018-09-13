@@ -3,7 +3,7 @@ const supertest = require('supertest');
 const request = supertest(app);
 const agent = supertest.agent(app);
 const expect = require('expect');
-const getWorkspacesByGithubId = require('../routes/routes').getWorkspacesByGithubId;
+const getWorkspacesByGithubId = require('../utils/utils').getWorkspacesByGithubId;
 
 const createAuthenticatedUser = (done) => {
    agent
@@ -32,11 +32,6 @@ describe('Server', () => {
          .expect((res) => {
          })
          .end(done);
-   });
-   it('should get workspaces by user id', (done) => {
-         getWorkspacesByGithubId('14299057').then((workspaces) => {
-            expect(workspaces.length).toBeGreaterThan(0);
-         }).then(done, done);
    });
 
 });

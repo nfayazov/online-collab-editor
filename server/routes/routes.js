@@ -2,6 +2,7 @@ const path = require('path').join(__dirname, '../../public/');
 const ts = require('unix-timestamp');
 const { Workspace } = require('../db/models/workspace');
 const User = require('../db/models/user');
+const utils = require('../utils/utils');
 
 module.exports = function(app, passport) {
 
@@ -30,7 +31,7 @@ module.exports = function(app, passport) {
       
    app.route('/profile')
       .get(isLoggedIn, function (req, res) {
-         getWorkspacesByGithubId(req.user.github.id).then((workspaces) => {
+         utils.getWorkspacesByGithubId(req.user.github.id).then((workspaces) => {
             res.render(path + 'views/profile.hbs', {
                name: req.user.github.displayName,
                username: req.user.github.username,
@@ -42,19 +43,6 @@ module.exports = function(app, passport) {
             res.status(404).send(e);
          });
       });
-
-   // Add this to some util file
-   let getWorkspacesByGithubId = (id) => {
-      return User.findOne({ 'github.id': id }).then((user) => {
-         return Promise.all(user.workspaces.map((ws) => {
-            return Workspace.findById(ws).then((wsRecord) => {
-               return {name: wsRecord.name, _id: wsRecord._id };
-            });
-         }))
-      }, (e) => {
-         return e;
-      });
-   };
 
    app.route('/auth/github')   
       .get(passport.authenticate('github'), (req, res) => {
@@ -83,23 +71,7 @@ module.exports = function(app, passport) {
             createdBy: req.user.github.id
          });
          // TODO: Refactor
-         workspace.save().then((doc) => {
-            // Add workspace to user profile
-            User.findOne({ 'github.id' : req.user.github.id}).then((user) => {
-               user.workspaces.push(doc._id);
-               user.save().then((updatedUser) => {
-                     res.send(updatedUser);
-               }, (e) => {
-                  res.status(404).send(e)
-               });
-            }, (e) => {
-               res.status(404).send(e);
-            });
-            res.send(doc._id);
-         }, (e) => {
-            res.status(400).send(e);
-         });
-                  
+         utils.saveWorkspace(workspace);
       })
       .get(isLoggedIn, function(req, res) {
          res.sendFile(path + 'newWorkspace.html');
@@ -114,7 +86,6 @@ module.exports = function(app, passport) {
          });
       });  
 
-   module.exports.getWorkspacesByGithubId = getWorkspacesByGithubId;
    // POST /workspace 
    // {text:"func main()",
    // users: "user1", "user3", "user5"

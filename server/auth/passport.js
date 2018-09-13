@@ -48,7 +48,7 @@ module.exports = function (passport) {
    let strategyForEnvironment = () => {
       let strategy;
       switch (process.env.NODE_ENV) {
-         case 'production' || 'development': 
+         case 'production': 
          strategy = new GitHubStrategy({
             clientID: configAuth.githubAuth.clientID,
             clientSecret: configAuth.githubAuth.clientSecret,
@@ -56,6 +56,7 @@ module.exports = function (passport) {
          }, handleStrategy);
             break;
          default:
+            console.log('Using local strategy');
             strategy = new MockStrategy('github', handleStrategy);
       }
       return strategy;

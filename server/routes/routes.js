@@ -19,8 +19,8 @@ module.exports = function(app, passport) {
       });
 
    app.route('/login')
-      .get(function (req, res) {
-         res.sendFile(path + 'login.html');
+      .get((req, res) => {
+         res.render(path + 'views/login.hbs');
 	   });
 
    app.route('/workspace-test')
@@ -56,8 +56,11 @@ module.exports = function(app, passport) {
       });
    }
 
-   app.route('/auth/github')
-      .get(passport.authenticate('github'));
+   app.route('/auth/github')   
+      .get(passport.authenticate('github'), (req, res) => {
+         if (process.env.NODE_ENV === 'development')
+            res.redirect('/profile');
+      });
 
    app.route('/auth/github/callback')
       .get(passport.authenticate('github', { failureRedirect: '/login' } ),

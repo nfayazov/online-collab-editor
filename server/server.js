@@ -40,8 +40,6 @@ app.use(bodyParser.urlencoded({
       extended: true
 }));
 
-//let {Workspace} = require('./db/models/workspace');
-
 routes(app, passport);
 
 // Socket.io

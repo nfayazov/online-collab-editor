@@ -48,7 +48,7 @@ module.exports = function (passport) {
    let strategyForEnvironment = () => {
       let strategy;
       switch (process.env.NODE_ENV) {
-         case 'production': 
+         case 'production' || 'development': 
          strategy = new GitHubStrategy({
             clientID: configAuth.githubAuth.clientID,
             clientSecret: configAuth.githubAuth.clientSecret,

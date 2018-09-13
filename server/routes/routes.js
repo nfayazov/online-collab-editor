@@ -54,7 +54,7 @@ module.exports = function(app, passport) {
       }, (e) => {
          res.status(404).send(e);
       });
-   }
+   };
 
    app.route('/auth/github')   
       .get(passport.authenticate('github'), (req, res) => {

@@ -1,3 +1,5 @@
+require('./config/config');
+
 const express = require('express')
       http = require('http'),
       path = require('path'),
@@ -26,7 +28,7 @@ let {mongoose} = require('./db/mongoose');
 
 // Authentication
 
-require('./config/passport')(passport);
+require('./auth/passport')(passport);
 app.use(session({
 	secret: 'superSecret',
 	resave: false,
@@ -65,8 +67,6 @@ let handleTextSent = (data) => {
 
 const port = process.env.PORT || 3000;
 
-server.listen(3000, () => {
-   console.log('Live Editor');
-});
+server.listen(port);
 
 module.exports.app = app;

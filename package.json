@@ -20,13 +20,13 @@
     "nodemon": "^1.18.3",
     "passport": "^0.4.0",
     "passport-github2": "^0.1.11",
+    "socket.io": "^2.1.1",
     "unix-timestamp": "^0.2.0"
   },
   "devDependencies": {
     "expect": "^23.6.0",
     "mocha": "^5.2.0",
     "passport-strategy": "^1.0.0",
-    "socket.io": "^2.1.1",
     "supertest": "^3.3.0"
   }
 }

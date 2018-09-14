@@ -70,8 +70,13 @@ module.exports = function(app, passport) {
             createdAt: ts.now(),
             createdBy: req.user.github.id
          });
+         console.log(`In routes: ${req.user.github.id}`)
          // TODO: Refactor
-         utils.saveWorkspace(workspace);
+         utils.saveWorkspace(workspace, req.user.github.id).then((workspace) => {
+            res.send(workspace._id);
+         }, (e) => {
+            res.status(404).send(e);
+         });
       })
       .get(isLoggedIn, function(req, res) {
          res.sendFile(path + 'newWorkspace.html');

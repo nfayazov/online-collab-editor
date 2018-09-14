@@ -13,22 +13,15 @@ module.exports.getWorkspacesByGithubId = (id) => {
    });
 };
 
-module.exports.saveWorkspace = (workspace) => {
-   workspace.save().then((doc) => {
-      // Add workspace to user profile
-      User.findOne({ 'github.id': req.user.github.id }).then((user) => {
-         user.workspaces.push(doc._id);
-         user.save().then((updatedUser) => {
-            res.send(updatedUser);
-         }, (e) => {
-            res.status(404).send(e)
-         });
-      }, (e) => {
-         res.status(404).send(e);
-      });
-      res.send(doc._id);
-   }, (e) => {
-      res.status(400).send(e);
-   });
-};
+module.exports.saveWorkspace = (workspace, githubId) => {
+   console.log(`WTF`);
+   return User.findOne({ 'github.id': githubId }).exec()
+      .then((user) => {
+         user.workspaces.push(workspace._id)
+         return user.save();
+      })
+      .then(updatedUser => workspace.save())
+      .then(workspace => workspace)
+      .catch(e => e);
+}
   

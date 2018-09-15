@@ -14,7 +14,7 @@ const createAuthenticatedUser = (done) => {
       });
 }
 
-describe('Server', () => {
+describe('Routes', () => {
    it('authenticate', createAuthenticatedUser);
    it('should fail fetching non-existent workspace', (done) => {
       agent

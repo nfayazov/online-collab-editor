@@ -14,7 +14,6 @@ module.exports.getWorkspacesByGithubId = (id) => {
 };
 
 module.exports.saveWorkspace = (workspace, githubId) => {
-   console.log(`WTF`);
    return User.findOne({ 'github.id': githubId }).exec()
       .then((user) => {
          user.workspaces.push(workspace._id)

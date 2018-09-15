@@ -24,7 +24,6 @@ module.exports = function (passport) {
                return done(err);
             }
             if (user) {
-               console.log(`Profile Id: ${profile.id}`);
                return done(null, user);
             } else {
                var newUser = new User();
@@ -56,7 +55,6 @@ module.exports = function (passport) {
          }, handleStrategy);
             break;
          default:
-            console.log('Using local strategy');
             strategy = new MockStrategy('github', handleStrategy);
       }
       return strategy;

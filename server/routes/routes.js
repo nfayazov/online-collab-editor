@@ -94,6 +94,12 @@ module.exports = function(app, passport) {
          res.render(path + 'views/invite.hbs');
       });
 
+   app.route('/invite/:workspaceId/:email')
+      .post(isLoggedIn, (req, res) => {
+         // TODO: vuln: only allow owner of the repo to invite users
+         console.log(req.params.email);
+      })
+
    // POST /workspace/:id 
    // {text:"func main()",
    // users: "user1", "user3", "user5"

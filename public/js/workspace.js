@@ -25,3 +25,8 @@ $('.changes-btn').on('click', function(e) {
    }
    
 });
+
+$('.invite-new-user').on('click', function() {
+   var splitBySlash = window.location.pathname.split('/');
+   $(location).attr('href', `/invite/${splitBySlash[splitBySlash.length-1]}`);
+});

@@ -19,7 +19,7 @@ module.exports.saveWorkspace = (workspace, githubId) => {
          user.workspaces.push(workspace._id)
          return user.save();
       })
-      .then(updatedUser => workspace.save())
+      .then( _ => workspace.save())
       .then(workspace => workspace)
       .catch(e => e);
 }

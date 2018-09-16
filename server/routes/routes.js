@@ -89,6 +89,11 @@ module.exports = function(app, passport) {
          });
       });  
 
+   app.route('/invite/:workspaceId')
+      .get(isLoggedIn, (req, res) => {
+         res.render(path + 'views/invite.hbs');
+      });
+
    // POST /workspace/:id 
    // {text:"func main()",
    // users: "user1", "user3", "user5"

@@ -1,15 +1,35 @@
 var socket = io();
+var splitBySlash = window.location.pathname.split('/');
+var workspaceId = splitBySlash[splitBySlash.length - 1];
 
-makingChanges = false;
+var makingChanges = false;
 
 $('.commit-btn').on('click', function(e) {
    e.preventDefault();
 
-   socket.emit('commitChanges', {
+   $.post('/api/commit/', {
+      workspace: workspaceId,
       text: $('.editor-box').val()
-   }, function() {
-      console.log('Changes successfully submitted');
+   }, function(text) {
+      console.log(`Commited text: ${text}`);
+      var params = {
+         workspaceId: workspaceId,
+         text: text
+      };
+
+      socket.emit('commitChanges', params, function (data, err) {
+         if (err) {
+            alert(err);
+            window.location.href = '/';
+         }
+      });
+      //console.log(data);
    });
+
+});
+
+socket.on('updateCode', (data, callback) => {
+   $('.commited-code').val(data.text);
 });
 
 $('.changes-btn').on('click', function(e) {
@@ -23,7 +43,6 @@ $('.changes-btn').on('click', function(e) {
       $('.changes').css('display', 'none');
       $(this).text("Add changes");
    }
-   
 });
 
 $('.invite-new-user').on('click', function() {

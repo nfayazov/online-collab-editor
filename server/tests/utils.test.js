@@ -1,6 +1,6 @@
 const expect = require('expect');
 const utils = require('../utils/utils');
-const {Workspace} = require('../db/models/workspace');
+const Workspace = require('../db/models/workspace');
 const ts = require('unix-timestamp');
 
 describe('Utils', () => {

@@ -1,7 +1,7 @@
 const path = require('path').join(__dirname, '../../public/');
 const ts = require('unix-timestamp');
-const { Workspace } = require('../db/models/workspace');
-const User = require('../db/models/user');
+const Workspace = require('../db/models/workspace');
+const {Commit} = require('../db/models/commit');
 const utils = require('../utils/utils');
 
 module.exports = function(app, passport) {
@@ -88,11 +88,15 @@ module.exports = function(app, passport) {
          res.sendFile(path + 'newWorkspace.html');
       });
       
+   /* TODO: check and make sure that user is collaborator of workspace */
    app.route('/workspace/:id')
       .get(isLoggedIn, (req, res) => {
          Workspace.findById(req.params.id).then((ws) => {
-            res.render(path + 'views/workspace.hbs', { filename: ws.filename });
-         }, (e) => {
+            let lastCommit = ws.commits[ws.commits.length-1];
+            Commit.findById(lastCommit).then((commit) =>{
+               res.render(path + 'views/workspace.hbs', { filename: ws.filename, text: commit.text });
+            });
+         }).catch(e => {
             res.status(404).send({error: 'Workspace not found'});
          });
       });  
@@ -108,7 +112,24 @@ module.exports = function(app, passport) {
          utils.inviteUser(req.user.github.id, req.params.workspaceId, req.params.username).then((invitee) => {
             res.render(path + 'views/invite-success.hbs', {invitee: invitee});
          }, e => res.status(404).send(e));
-      })
+      });
+
+   app.route('/api/commit/')
+      .post(isLoggedIn, (req, res) => {
+         let commit = new Commit({
+            workspace: req.body.workspace,
+            text: req.body.text,
+            createdAt: ts.now(),
+            createdBy: req.user.github.id
+         });
+
+         commit.save().then((commit) => {
+            Workspace.findById(req.body.workspace).then((workspace) => {
+               workspace.commits.push(commit._id);
+               workspace.save();
+            }).then((_) => res.send(commit.text));
+         }).catch(e => console.log(e));
+      });
 
    // POST /workspace/:id 
    // {text:"func main()",

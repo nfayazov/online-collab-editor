@@ -1,5 +1,5 @@
 const User = require('../db/models/user');
-const { Workspace } = require('../db/models/workspace');
+const Workspace = require('../db/models/workspace');
 
 module.exports.getWorkspacesByGithubId = (id) => {
    return User.findOne({ 'github.id': id }).then((user) => {

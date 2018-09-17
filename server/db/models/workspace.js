@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const CommitSchema = require('./commit').CommitSchema;
 
 let Workspace = mongoose.model('Workspace', {
    name: {
@@ -21,14 +22,8 @@ let Workspace = mongoose.model('Workspace', {
       type: String,
       require: true
    },
-   collaborators: {
-      type: [{
-         type: String
-      }]
-   }/*,
-   commits: [{
-      type: mongoose.Schema.Types.ObjectId
-   }]*/
+   collaborators: [String],
+   commits: [CommitSchema]
 });
 
-module.exports = {Workspace};
+module.exports = Workspace;

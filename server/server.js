@@ -1,14 +1,13 @@
 require('./config/config');
 
 const express = require('express')
-      http = require('http'),
       path = require('path'),
-      socketIO = require('socket.io'),
       bodyParser = require('body-parser'),
       routes = require('./routes/routes'),
       session = require('express-session'),
       passport = require('passport'),
-      hbs = require('hbs');
+      hbs = require('hbs'),
+      socket = require('./socket.io');
 
 require('dotenv').load();
 
@@ -29,11 +28,13 @@ let {mongoose} = require('./db/mongoose');
 // Authentication
 
 require('./auth/passport')(passport);
-app.use(session({
-	secret: 'superSecret',
-	resave: false,
-	saveUninitialized: true
-}));
+let sessionMiddleware = session({
+   secret: 'superSecret',
+   resave: false,
+   saveUninitialized: true
+});
+
+app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({
@@ -44,27 +45,12 @@ routes(app, passport);
 
 // Socket.io
 
-let server = http.createServer(app);
-let io = socketIO(server);
-
-io.on('connection', (socket) => {
-
-   socket.emit('newUser', );
-   socket.on('changedText', handleTextSent);
-
-   socket.on('commitChanges', (data, callback) => {
-      console.log(data.text);
-      callback();
-   });
-});
-
-let handleTextSent = (data) => {
-   text.text = data.text;
-   io.sockets.emit('changedText', data);
-}
+let server = socket(app, sessionMiddleware);
 
 const port = process.env.PORT || 3000;
-
 server.listen(port);
 
-module.exports.app = app;
+module.exports = {
+   app:app, 
+   sessionMiddleware: sessionMiddleware
+}

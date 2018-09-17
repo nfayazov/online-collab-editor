@@ -2,7 +2,7 @@ textarea {
    resize: none;
 }
 
-.existing-code {
+.commited-code {
    overflow: scroll;
    border: none;
 }

@@ -31,16 +31,17 @@ module.exports = function(app, passport) {
       
    app.route('/profile')
       .get(isLoggedIn, function (req, res) {
+         let profile = {
+            name: req.user.github.displayName,
+            username: req.user.github.username,
+            avatar_url: req.user.github.avatar_url,
+            bio: req.user.github.bio
+         };
          utils.getWorkspacesByGithubId(req.user.github.id).then((workspaces) => {
-            res.render(path + 'views/profile.hbs', {
-               name: req.user.github.displayName,
-               username: req.user.github.username,
-               avatar_url: req.user.github.avatar_url,
-               bio: req.user.github.bio,
-               workspaces: workspaces
-            });
+            profile.workspaces = workspaces;
+            res.render(path + 'views/profile.hbs', profile);
          }, (e) => {
-            res.status(404).send(e);
+               res.status(404).send(e);
          });
       });
 
@@ -94,10 +95,13 @@ module.exports = function(app, passport) {
          res.render(path + 'views/invite.hbs');
       });
 
-   app.route('/invite/:workspaceId/:email')
-      .post(isLoggedIn, (req, res) => {
+   app.route('/invite/:workspaceId/:username')
+      .get(isLoggedIn, (req, res) => {
          // TODO: vuln: only allow owner of the repo to invite users
-         console.log(req.params.email);
+         console.log(req.params.username);
+         utils.inviteUser(req.user.github.id, req.params.workspaceId, req.params.username).then((invitee) => {
+            console.log(invitee);
+         });
       })
 
    // POST /workspace/:id 

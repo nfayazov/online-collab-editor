@@ -13,13 +13,18 @@ let Workspace = mongoose.model('Workspace', {
       type: String,
       require: true
    },
-   createAt: {
+   createdAt: {
       type: Number,
       require: true
    }, 
-   commitedBy: {
+   createdBy: {
       type: String,
       require: true
+   },
+   collaborators: {
+      type: [{
+         type: String
+      }]
    }/*,
    commits: [{
       type: mongoose.Schema.Types.ObjectId

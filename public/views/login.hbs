@@ -14,6 +14,13 @@
                      <p>LOGIN WITH GITHUB</p>
                   </div>
                </a>
+               {{#if dev}}
+                  <a href="/auth/mock">
+                     <div class="btn btn-primary" id="login-btn">
+                        <p>LOGIN WITH MOCK ACCOUNT</p>
+                     </div>
+                  </a>
+               {{/if}}
             </div>
          </div>
       </div>

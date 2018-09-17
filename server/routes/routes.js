@@ -21,7 +21,10 @@ module.exports = function(app, passport) {
 
    app.route('/login')
       .get((req, res) => {
-         res.render(path + 'views/login.hbs');
+         var dev = false;
+         console.log('process.env.NODE_ENV');
+         if (process.env.NODE_ENV === 'development') dev = true;
+         res.render(path + 'views/login.hbs', {dev : dev});
 	   });
 
    app.route('/workspace-test')
@@ -49,6 +52,11 @@ module.exports = function(app, passport) {
       .get(passport.authenticate('github'), (req, res) => {
          if (process.env.NODE_ENV === 'development')
             res.redirect('/profile');
+      });
+
+   app.route('/auth/mock')
+      .get(passport.authenticate('github', {mock: true}), (req, res) => {
+         res.redirect('/profile');
       });
 
    app.route('/auth/github/callback')
@@ -98,10 +106,9 @@ module.exports = function(app, passport) {
    app.route('/invite/:workspaceId/:username')
       .get(isLoggedIn, (req, res) => {
          // TODO: vuln: only allow owner of the repo to invite users
-         console.log(req.params.username);
          utils.inviteUser(req.user.github.id, req.params.workspaceId, req.params.username).then((invitee) => {
-            console.log(invitee);
-         });
+            res.render(path + 'views/invite-success.hbs');
+         }, e => res.status(404).send(e));
       })
 
    // POST /workspace/:id 

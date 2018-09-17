@@ -1,4 +1,4 @@
-module.exports.MockProfile = { 
+module.exports = { 
   id: '14299057',
   displayName: 'Nadir Fayazov',
   username: 'nfayazov',

@@ -22,7 +22,6 @@ module.exports = function(app, passport) {
    app.route('/login')
       .get((req, res) => {
          var dev = false;
-         console.log('process.env.NODE_ENV');
          if (process.env.NODE_ENV === 'development') dev = true;
          res.render(path + 'views/login.hbs', {dev : dev});
 	   });
@@ -107,7 +106,7 @@ module.exports = function(app, passport) {
       .get(isLoggedIn, (req, res) => {
          // TODO: vuln: only allow owner of the repo to invite users
          utils.inviteUser(req.user.github.id, req.params.workspaceId, req.params.username).then((invitee) => {
-            res.render(path + 'views/invite-success.hbs');
+            res.render(path + 'views/invite-success.hbs', {invitee: invitee});
          }, e => res.status(404).send(e));
       })
 

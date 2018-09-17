@@ -41,10 +41,12 @@ module.exports.inviteUser = (githubId, workspaceId, username) => {
                   return invitee.save();
                });
             } else {
-               throw 'Only the owner of the workspace can invite users';
+               return Promise.reject('Only the owner of the workspace can invite users');
             }
          });
-      }).catch(e => e);
+      }).catch(e => {
+         throw e;
+      });
    // Check that this is the admin of the workspaceId;
 }
 

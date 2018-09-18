@@ -22,20 +22,7 @@ module.exports = function(app, sessionMiddleware) {
          });
          callback();
       });
-
-      //socket.on('changedText', handleTextSent);
-
-      socket.on('commitChanges', (data, callback) => {
-         console.log(data.text);
-         
-         callback();
-      });
    });
-
-   let handleTextSent = (data) => {
-      text.text = data.text;
-      io.sockets.emit('changedText', data);
-   };
 
    return server;
 

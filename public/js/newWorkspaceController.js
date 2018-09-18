@@ -4,7 +4,6 @@ $('#save-btn').click(function() {
       filename: $('#ws-file').val(),
       description: $('#ws-desc').val()
    }, function(data) {
-      console.log(data);
       $(location).attr('href', '/workspace/' + data);
    });
 });

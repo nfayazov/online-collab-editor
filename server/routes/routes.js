@@ -3,6 +3,7 @@ const ts = require('unix-timestamp');
 const Workspace = require('../db/models/workspace');
 const {Commit} = require('../db/models/commit');
 const utils = require('../utils/utils');
+const ObjectId = require('mongoose').Schema.Types.ObjectId;
 
 module.exports = function(app, passport) {
 
@@ -76,11 +77,22 @@ module.exports = function(app, passport) {
             description: req.body.description,
             filename: req.body.filename,
             createdAt: ts.now(),
-            createdBy: req.user.github.id
+            createdBy: req.user.github.id,
          });
          utils.saveWorkspace(workspace, req.user.github.id).then((workspace) => {
-            res.send(workspace._id);
-         }, (e) => {
+            let initCommit = new Commit({
+               workspace: workspace._id,
+               text: '',
+               createdAt: ts.now(),
+               createdBy: req.user.github.id
+            });
+            workspace.commits.push(initCommit);
+            workspace.save().then(workspace => {
+               initCommit.save().then(_ => {
+                  res.send(workspace._id);
+               });
+            });
+         }).catch(e => {
             res.status(404).send(e);
          });
       })
@@ -110,7 +122,7 @@ module.exports = function(app, passport) {
       .get(isLoggedIn, (req, res) => {
          // TODO: vuln: only allow owner of the repo to invite users
          utils.inviteUser(req.user.github.id, req.params.workspaceId, req.params.username).then((invitee) => {
-            res.render(path + 'views/invite-success.hbs', {invitee: invitee});
+            res.render(path + 'views/invite-success.hbs', {invitee: invitee.github.username});
          }, e => res.status(404).send(e));
       });
 

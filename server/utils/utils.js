@@ -28,24 +28,23 @@ module.exports.inviteUser = (githubId, workspaceId, username) => {
       .then((user) =>  {
          // check that they're the owner of workspace
          return Workspace.findById(workspaceId).then((workspace) => {
-            console.log(`Created By: ${workspace.createdBy}, inviter: ${user.github.id}`);
             if (workspace.createdBy === user.github.id) {
                // get the invitee
                return User.findOne({'github.username':username}).then((invitee) => {
-                  // update workspace
-                  if (invitee.workspaces.indexof(workspace._id)>=0) {
+                  // update workspace if doesn't exist
+                  if (invitee.workspaces.indexOf(workspace._id)>=0) {
                      invitee.workspaces.push(workspace._id);
                      return invitee.save();
                   } else {
-                     return Promise.reject(`User ${invitee.github.username} is already a collaborator of this project`);
+                     throw `User ${invitee.github.username} is already a collaborator of this project`;
                   }  
                }).then((invitee) => {
                // update invitee's workspaces
                   workspace.collaborators.push(invitee.github.id);
                   return invitee.save();
-               });
+               }, e => { throw e });
             } else {
-               return Promise.reject('Only the owner of the workspace can invite users');
+               throw 'Only the owner of the workspace can invite users';
             }
          });
       }).catch(e => {

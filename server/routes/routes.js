@@ -120,7 +120,6 @@ module.exports = function(app, passport) {
 
    app.route('/invite/:workspaceId/:username')
       .get(isLoggedIn, (req, res) => {
-         // TODO: vuln: only allow owner of the repo to invite users
          utils.inviteUser(req.user.github.id, req.params.workspaceId, req.params.username).then((invitee) => {
             res.render(path + 'views/invite-success.hbs', {invitee: invitee.github.username});
          }, e => res.status(404).send(e));

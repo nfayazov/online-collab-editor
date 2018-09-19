@@ -33,8 +33,12 @@ module.exports.inviteUser = (githubId, workspaceId, username) => {
                // get the invitee
                return User.findOne({'github.username':username}).then((invitee) => {
                   // update workspace
-                  invitee.workspaces.push(workspace._id);
-                  return invitee.save();
+                  if (invitee.workspaces.indexof(workspace._id)>=0) {
+                     invitee.workspaces.push(workspace._id);
+                     return invitee.save();
+                  } else {
+                     return Promise.reject(`User ${invitee.github.username} is already a collaborator of this project`);
+                  }  
                }).then((invitee) => {
                // update invitee's workspaces
                   workspace.collaborators.push(invitee.github.id);

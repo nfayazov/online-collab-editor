@@ -72,6 +72,7 @@ module.exports = function(app, passport) {
 
    app.route('/new')
       .post(isLoggedIn, function(req,res) {
+         // all of this needs to be inside utils
          let workspace = new Workspace({
             name: req.body.name,
             description: req.body.description,
@@ -100,7 +101,7 @@ module.exports = function(app, passport) {
          res.sendFile(path + 'newWorkspace.html');
       });
       
-   /* TODO: check and make sure that user is collaborator of workspace */
+   /* TODO: this needs to be its own function in utils */
    app.route('/workspace/:id')
       .get(isLoggedIn, (req, res) => {
          Workspace.findById(req.params.id).then((ws) => {
@@ -111,6 +112,11 @@ module.exports = function(app, passport) {
          }).catch(e => {
             res.status(404).send({error: 'Workspace not found'});
          });
+      }).delete(isLoggedIn, (req, res) => {
+         console.log('DELETE');
+         utils.deleteWorkspace(req.user.github.id, req.params.id).then((ws) => {
+            res.render(path + 'views/delete-workspace.hbs', {workspace: ws.name});
+         }, e => { res.status(400).send(e)});
       });  
 
    app.route('/invite/:workspaceId')
@@ -141,7 +147,6 @@ module.exports = function(app, passport) {
             }).then((_) => res.send(commit.text));
          }).catch(e => console.log(e));
       });
-
    // POST /workspace/:id 
    // {text:"func main()",
    // users: "user1", "user3", "user5"

@@ -1,5 +1,7 @@
 const User = require('../db/models/user');
 const Workspace = require('../db/models/workspace');
+const Commit = require('../db/models/commit').Commit;
+const ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports.getWorkspacesByGithubId = (id) => {
    return User.findOne({ 'github.id': id }).then((user) => {
@@ -22,6 +24,38 @@ module.exports.saveWorkspace = (workspace, githubId) => {
       .catch(e => e);
 }
 
+module.exports.deleteWorkspace = (githubId, workspaceId) => {
+   // Check if owner of repo
+   console.log(`WorkspaceId: ${workspaceId}, githubId: ${githubId}`);
+   return Workspace.findById(workspaceId).then((workspace) => {
+      if (workspace.createdBy === githubId) {
+         console.log('Found workspace');
+         return workspace;
+      } else {
+         throw 'Only the owner of the repo can delete a workspace';
+      }
+   }).then(workspace => {
+      // delete all commits
+      Commit.deleteMany({'workspace' : workspaceId}).exec().then((_) => {
+      }, e => {throw e});
+
+      // delete workspace from all collaborators
+      //, { $pull: { worksapaces: new ObjectId(workspaceId)}}
+      User.updateMany({ workspaces: { $elemMatch: { $eq: new ObjectId(workspaceId) } } }, { $pull: { workspaces: new ObjectId(workspaceId) } }).exec().then((result) => {
+         
+         console.log('User result:' + JSON.stringify(result));
+         /*user.workspaces.splice(workspace._id);
+         user.save().then((user) => {
+            console.log(`Updates user: ${user}`);
+         });*/
+      }, e => {throw e});
+
+      return Workspace.deleteOne({_id: workspace._id});
+   }).then(workspace => {
+      return workspace;
+   }).catch(e => { throw e});
+}
+
 module.exports.inviteUser = (githubId, workspaceId, username) => {
    // get the inviter 
    return User.findOne({ 'github.id': githubId })
@@ -32,7 +66,7 @@ module.exports.inviteUser = (githubId, workspaceId, username) => {
                // get the invitee
                return User.findOne({'github.username':username}).then((invitee) => {
                   // update workspace if doesn't exist
-                  if (invitee.workspaces.indexOf(workspace._id)>=0) {
+                  if (invitee.workspaces.indexOf(workspace._id)<0) {
                      invitee.workspaces.push(workspace._id);
                      return invitee.save();
                   } else {

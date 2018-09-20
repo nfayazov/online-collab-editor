@@ -12,7 +12,6 @@ module.exports = function(app, sessionMiddleware) {
    });
 
    io.on('connection', (socket) => {
-
       socket.on('commitChanges', (params, callback) => {
          socket.join(params.workspaceId);
          

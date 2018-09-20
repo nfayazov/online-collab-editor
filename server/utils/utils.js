@@ -26,10 +26,8 @@ module.exports.saveWorkspace = (workspace, githubId) => {
 
 module.exports.deleteWorkspace = (githubId, workspaceId) => {
    // Check if owner of repo
-   console.log(`WorkspaceId: ${workspaceId}, githubId: ${githubId}`);
    return Workspace.findById(workspaceId).then((workspace) => {
       if (workspace.createdBy === githubId) {
-         console.log('Found workspace');
          return workspace;
       } else {
          throw 'Only the owner of the repo can delete a workspace';
@@ -40,19 +38,16 @@ module.exports.deleteWorkspace = (githubId, workspaceId) => {
       }, e => {throw e});
 
       // delete workspace from all collaborators
-      //, { $pull: { worksapaces: new ObjectId(workspaceId)}}
-      User.updateMany({ workspaces: { $elemMatch: { $eq: new ObjectId(workspaceId) } } }, { $pull: { workspaces: new ObjectId(workspaceId) } }).exec().then((result) => {
-         
-         console.log('User result:' + JSON.stringify(result));
-         /*user.workspaces.splice(workspace._id);
-         user.save().then((user) => {
-            console.log(`Updates user: ${user}`);
-         });*/
-      }, e => {throw e});
+      User.updateMany({ workspaces: { $elemMatch: { $eq: new ObjectId(workspaceId) } } }, { $pull: { workspaces: new ObjectId(workspaceId) } } 
+         ,function (err) {
+            if (err) throw err;
+         });
 
-      return Workspace.deleteOne({_id: workspace._id});
-   }).then(workspace => {
-      return workspace;
+      console.log(workspace._id);
+      return Workspace.deleteOne({_id: new ObjectId(workspace._id)});
+   }).then(result => {
+      console.log('Deleted workspace');
+      return result;
    }).catch(e => { throw e});
 }
 

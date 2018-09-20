@@ -31,12 +31,15 @@ $('.commit-btn').on('click', function(e) {
 // TODO: make sure you can only delete if no one else is working right now
 $('.delete-workspace').on('click', function(e) {
    e.preventDefault();
-   console.log('Deleting workspace');
    $.ajax({
       url: window.location.pathname,
       type: 'DELETE',
       success: function (_) {
-         console.log('Workspace successfully deleted');
+         $(location).attr('href', '/delete/workspace');
+      },
+      error: function(err) {
+         console.log(err);
+         // Redirect to error page
       }
    });
 })

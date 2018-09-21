@@ -2,6 +2,7 @@ const User = require('../db/models/user');
 const Workspace = require('../db/models/workspace');
 const Commit = require('../db/models/commit').Commit;
 const ObjectId = require('mongoose').Types.ObjectId;
+const ts = require('unix-timestamp');
 
 module.exports.getWorkspacesByGithubId = (id) => {
    return User.findOne({ 'github.id': id }).then((user) => {
@@ -14,13 +15,24 @@ module.exports.getWorkspacesByGithubId = (id) => {
 };
 
 module.exports.saveWorkspace = (workspace, githubId) => {
+   let initCommit = new Commit({
+      workspace: workspace._id,
+      text: '',
+      createdAt: ts.now(),
+      createdBy: githubId
+   });
+   
    return User.findOne({ 'github.id': githubId }).exec()
       .then((user) => {
          user.workspaces.push(workspace._id)
          return user.save();
-      })
-      .then( _ => workspace.save())
-      .then(workspace => workspace)
+      }).then( _ => workspace.save())
+      .then(workspace => {
+         // Make init commit
+         workspace.commits.push(initCommit);
+         return workspace.save();
+      }).then(_ => initCommit.save())
+      .then(_ => workspace)
       .catch(e => e);
 }
 

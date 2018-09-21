@@ -3,7 +3,6 @@ const supertest = require('supertest');
 const request = supertest(app);
 const agent = supertest.agent(app);
 const expect = require('expect');
-const getWorkspacesByGithubId = require('../utils/utils').getWorkspacesByGithubId;
 
 const createAuthenticatedUser = (done) => {
    agent
@@ -21,16 +20,14 @@ describe('Routes', () => {
          .get('/workspace/224242')
          .expect(404)
          .expect((res) => {
-            expect(res.body.error).toBe('Workspace not found');
+            expect(res.body.message).toBe('Cast to ObjectId failed for value "224242" at path "_id" for model "Workspace"');
          })
          .end(done);
    });
    it('should get Nadir\'s sample workspace', (done) => {
       agent
-         .get('/workspace/5b981da10995c7517a615d58')
+         .get('/workspace/5ba43c3b140e8e0f32b35d8e')
          .expect(200)
-         .expect((res) => {
-         })
          .end(done);
    });
 

@@ -81,18 +81,7 @@ module.exports = function(app, passport) {
             createdBy: req.user.github.id,
          });
          utils.saveWorkspace(workspace, req.user.github.id).then((workspace) => {
-            let initCommit = new Commit({
-               workspace: workspace._id,
-               text: '',
-               createdAt: ts.now(),
-               createdBy: req.user.github.id
-            });
-            workspace.commits.push(initCommit);
-            workspace.save().then(workspace => {
-               initCommit.save().then(_ => {
-                  res.send(workspace._id);
-               });
-            });
+           res.send(workspace._id);
          }).catch(e => {
             res.status(404).send(e);
          });
@@ -106,15 +95,12 @@ module.exports = function(app, passport) {
       .get(isLoggedIn, (req, res) => {
          Workspace.findById(req.params.id).then((ws) => {
             let lastCommit = ws.commits[ws.commits.length-1];
-            Commit.findById(lastCommit).then((commit) =>{
-               res.render(path + 'views/workspace.hbs', { filename: ws.filename, text: commit.text });
-            });
+            res.render(path + 'views/workspace.hbs', { filename: ws.filename, text: lastCommit.text });
          }).catch(e => {
             res.status(404).send(e);
          });
       }).delete(isLoggedIn, (req, res) => {
          utils.deleteWorkspace(req.user.github.id, req.params.id).then((data) => {
-            console.log(data);
             res.end();
          }, e => { res.status(400).send(e) });
       });  

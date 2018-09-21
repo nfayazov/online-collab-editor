@@ -16,7 +16,7 @@ let app = express();
 // This simply allows us to do localhost:3000/login.html
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));
-app.use('/styles', express.static(path.join(__dirname, '../public/styles')));
+app.use('/css', express.static(path.join(__dirname, '../public/css')));
 
 // Templating engine
 app.set('view engine', 'hbs');

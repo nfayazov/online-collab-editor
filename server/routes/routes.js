@@ -87,7 +87,7 @@ module.exports = function(app, passport) {
          });
       })
       .get(isLoggedIn, function(req, res) {
-         res.sendFile(path + 'newWorkspace.html');
+         res.render(path + 'views/new-workspace.hbs');
       });
       
    /* TODO: this needs to be its own function in utils */
@@ -95,7 +95,12 @@ module.exports = function(app, passport) {
       .get(isLoggedIn, (req, res) => {
          Workspace.findById(req.params.id).then((ws) => {
             let lastCommit = ws.commits[ws.commits.length-1];
-            res.render(path + 'views/workspace.hbs', { filename: ws.filename, text: lastCommit.text });
+            res.render(path + 'views/workspace.hbs', { 
+               name: ws.name, 
+               description: ws.description, 
+               filename: ws.filename, 
+               text: lastCommit.text 
+            });
          }).catch(e => {
             res.status(404).send(e);
          });

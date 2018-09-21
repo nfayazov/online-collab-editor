@@ -98,7 +98,6 @@ module.exports.inviteUser = (githubId, workspaceId, username) => {
       }).catch(e => {
          throw e;
       });
-   // Check that this is the admin of the workspaceId;
 }
 
   

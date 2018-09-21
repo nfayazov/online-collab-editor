@@ -63,7 +63,7 @@ module.exports.deleteWorkspace = (githubId, workspaceId) => {
 module.exports.commit = (commit, workspace) => {
    return commit.save().then((commit) => {
       return Workspace.findById(workspace).then((workspace) => {
-         workspace.commits.push(commit._id);
+         workspace.commits.push(commit);
          return workspace.save();
       }, e => { throw e })
       .then((_) => commit);

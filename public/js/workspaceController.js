@@ -61,6 +61,15 @@ $('.changes-btn').on('click', function(e) {
    }
 });
 
+$('.pull-changes-btn').on('click', function(e) {
+   e.preventDefault();
+
+   $.get('/api/pull/' + workspaceId, function(data) {
+      console.log(data)
+      $('.editor-box').val(data);
+   });
+})
+
 $('.invite-new-user').on('click', function() {
    var splitBySlash = window.location.pathname.split('/');
    $(location).attr('href', `/invite/${splitBySlash[splitBySlash.length-1]}`);

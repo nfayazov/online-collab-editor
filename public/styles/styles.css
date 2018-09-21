@@ -11,6 +11,10 @@ textarea {
    display: none;
 }
 
+.pull-changes {
+   display: none;
+}
+
 .btn {
    margin-top: 10px;
    margin-bottom: 10px;

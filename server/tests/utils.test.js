@@ -71,6 +71,4 @@ describe('Utils', () => {
       }).then(done, done);
    });
 
-
-
 });

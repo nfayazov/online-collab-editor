@@ -130,12 +130,9 @@ module.exports = function(app, passport) {
             createdAt: ts.now(),
             createdBy: req.user.github.id
          });
-
-         commit.save().then((commit) => {
-            Workspace.findById(req.body.workspace).then((workspace) => {
-               workspace.commits.push(commit._id);
-               workspace.save();
-            }).then((_) => res.send(commit.text));
-         }).catch(e => console.log(e));
+         
+         utils.commit(commit, req.body.workspace).then((commit) => {
+            res.send(commit.text)
+         }, e => { res.status(400).send(e)}); // TODO: show this to user
       });
 }

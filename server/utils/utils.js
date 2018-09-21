@@ -54,13 +54,20 @@ module.exports.deleteWorkspace = (githubId, workspaceId) => {
          ,function (err) {
             if (err) throw err;
          });
-
-      console.log(workspace._id);
       return Workspace.deleteOne({_id: new ObjectId(workspace._id)});
    }).then(result => {
-      console.log('Deleted workspace');
       return result;
    }).catch(e => { throw e});
+}
+
+module.exports.commit = (commit, workspace) => {
+   return commit.save().then((commit) => {
+      return Workspace.findById(workspace).then((workspace) => {
+         workspace.commits.push(commit._id);
+         return workspace.save();
+      }, e => { throw e })
+      .then((_) => commit);
+   }).catch(e => { throw e });
 }
 
 module.exports.inviteUser = (githubId, workspaceId, username) => {

@@ -6,6 +6,10 @@ var makingChanges = false;
 var username;
 
 $(function () {
+   var myCodeMirror = CodeMirror.fromTextArea($('.editor-box')[0], {
+      lineNumbers : true
+   });
+
    $.get('/username', function (username) {
       username = username; // make global
       var params = {workspaceId: workspaceId, username: username};
@@ -65,7 +69,7 @@ $('.delete-workspace').on('click', function(e) {
 })
 
 socket.on('updateCode', (data, callback) => {
-   $('.commited-code').val(data.text);
+   $('.committed-code').val(data.text);
 });
 
 $('.changes-btn').on('click', function(e) {
@@ -84,9 +88,8 @@ $('.changes-btn').on('click', function(e) {
 $('.pull-changes-btn').on('click', function(e) {
    e.preventDefault();
 
-   $.get('/api/pull/' + workspaceId, function(data) {
-      $('.editor-box').val(data);
-   });
+   let pullText = $('.committed-code').val();
+   $('.editor-box').val(pullText);
 })
 
 $('.invite-new-user').on('click', function() {

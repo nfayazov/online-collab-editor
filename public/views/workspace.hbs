@@ -7,6 +7,10 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
       <link rel="stylesheet" href="/css/styles.css" type="text/css"/>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      
+      <script src="/codemirror/lib/codemirror.js"></script>
+      <link rel="stylesheet" href="/codemirror/lib/codemirror.css">
+      <script src="/codemirror/mode/javascript/javascript.js"></script>
      </head>
    <body>  
       <div class="sidenav" id="mySidenav"></div>
@@ -21,7 +25,7 @@
             <div class="row">
                <div class="col-xs-8">
                   <h3 style="font-style: italic">{{filename}}</h2>
-                  <textarea readonly class="form-control commited-code rounded-0" rows="15">{{text}}</textarea>
+                  <textarea readonly class="form-control committed-code rounded-0" rows="15">{{text}}</textarea>
                   <div class="btn btn-primary changes-btn pull-right">Add Changes</div>
                   <div class="changes">
                      <textarea class="form-control sm-textarea editor-box" rows="10">{{text}}</textarea>

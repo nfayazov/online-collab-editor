@@ -11,17 +11,14 @@ module.exports = function(app, sessionMiddleware) {
       sessionMiddleware(socket.request, {}, next);
    });
 
-   let users = [];
+   let users = {};
 
    io.on('connection', (socket) => {
 
       socket.on('join', (params, callback) => {
          socket.join(params.workspaceId);
-         users.push(params.username);
-         console.log(`Joined room: ${users}`);
-         io.to(params.workspaceId).emit('user_joined', users);
-         //var roster = io.sockets.adapter.rooms[workspaceId].sockets;
-         //console.log(roster);
+         users[socket.id] = params.username;
+         io.to(params.workspaceId).emit('update_users', Object.keys(users).map(id => users[id]));
          
          socket.on('commitChanges', (params, callback) => {
             io.to(params.workspaceId).emit('updateCode', {
@@ -29,6 +26,13 @@ module.exports = function(app, sessionMiddleware) {
             });
             callback();
          });
+
+         socket.on('disconnect', () => {
+            delete users[socket.id];
+
+            socket.broadcast.to(params.workspaceId).emit('update_users', Object.keys(users).map(id => users[id]));
+         })
+
          callback();
       });
    });

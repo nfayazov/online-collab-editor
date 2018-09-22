@@ -3,13 +3,13 @@ var splitBySlash = window.location.pathname.split('/');
 var workspaceId = splitBySlash[splitBySlash.length - 1];
 
 var makingChanges = false;
+var username;
 
 $(function () {
    $.get('/username', function (username) {
-      console.log('Username: ' + username);
+      username = username; // make global
       var params = {workspaceId: workspaceId, username: username};
       socket.emit('join', params, function (data, err) {
-
          if (err) {
             alert(err);
             window.location.href = '/';
@@ -19,8 +19,7 @@ $(function () {
    });
 });
 
-socket.on('user_joined', (users, callback) => {
-   console.log('Users joined: ' + users);
+socket.on('update_users', (users, callback) => {
    $('.sidenav').empty();
    users.map(function (username) {
       $('.sidenav').append('<p>' + username  + '</p>');

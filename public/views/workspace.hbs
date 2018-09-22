@@ -3,90 +3,46 @@
    <head>
       <title>Live Editor</title>
       <meta charset="utf-8"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <link rel="stylesheet" href="/css/styles.css" type="text/css">
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+      <link rel="stylesheet" href="/css/styles.css" type="text/css"/>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-      <!-- Font Awesome JS -->
-      <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
-         crossorigin="anonymous"></script>
-      <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
-         crossorigin="anonymous"></script>
-
      </head>
-   <body>
-      <div class="sidebar-show">
-         <nav class="sidebar-nav">
-            <ul class="nav">
-               <li class="nav-title">Nav Title</li>
-               <li class="nav-item">
-                  <a class="nav-link" href="#">
-                     <i class="nav-icon cui-speedometer"></i> Nav item
-                  </a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="#">
-                     <i class="nav-icon cui-speedometer"></i> With badge
-                     <span class="badge badge-primary">NEW</span>
-                  </a>
-               </li>
-               <li class="nav-item nav-dropdown">
-                  <a class="nav-link nav-dropdown-toggle" href="#">
-                     <i class="nav-icon cui-puzzle"></i> Nav dropdown
-                  </a>
-                  <ul class="nav-dropdown-items">
-                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                           <i class="nav-icon cui-puzzle"></i> Nav dropdown item
-                        </a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                           <i class="nav-icon cui-puzzle"></i> Nav dropdown item
-                        </a>
-                     </li>
-                  </ul>
-               </li>
-               <li class="nav-item mt-auto">
-                  <a class="nav-link nav-link-success" href="https://coreui.io">
-                     <i class="nav-icon cui-cloud-download"></i> Download CoreUI</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link nav-link-danger" href="https://coreui.io/pro/">
-                     <i class="nav-icon cui-layers"></i> Try CoreUI
-                     <strong>PRO</strong>
-                  </a>
-               </li>
-            </ul>
-         </nav>
-         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+   <body>  
+      <div class="sidenav" id="mySidenav">
+         <a href="#">About</a>
+         <a href="#">Services</a>
+         <a href="#">Clients</a>
+         <a href="#">Contact</a>
       </div>
-      <div class="container">
-         <div class="row">
-            <div class="col-md-5"></div>
-            <div class="col-md-4">
-               <h1>{{name}}</h1>
-               <p>{{description}}<p>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-md-8">
-               <h2 style="font-style: italic">{{filename}}</h2>
-               <textarea readonly class="form-control commited-code rounded-0" rows="15">{{text}}</textarea>
-               <div class="btn btn-primary changes-btn pull-right">Add Changes</div>
-               <div class="changes">
-                  <textarea class="form-control sm-textarea editor-box" rows="10">{{text}}</textarea>
-                  <div class="btn btn-primary pull-changes-btn pull-left">Pull Changes</div>
-                  <div class="btn btn-success commit-btn pull-right">Commit</div>
+      <div class="main">
+         <div class="container">
+            <div class="row">
+               <div class="col-xs-4">
+                  <h1>{{name}}</h1>
+                  <h3 style="font-weight: normal">{{description}}<h3>
                </div>
             </div>
-            <div class="col-md-4">
-               <div class="btn btn-primary invite-new-user pull-right">Invite A User</div>
-            </div>
-            <div class="col-md-4">
-               <div class="btn btn-danger delete-workspace pull-right">Delete Workspace</div>
+            <div class="row">
+               <div class="col-xs-8">
+                  <h3 style="font-style: italic">{{filename}}</h2>
+                  <textarea readonly class="form-control commited-code rounded-0" rows="15">{{text}}</textarea>
+                  <div class="btn btn-primary changes-btn pull-right">Add Changes</div>
+                  <div class="changes">
+                     <textarea class="form-control sm-textarea editor-box" rows="10">{{text}}</textarea>
+                     <div class="btn btn-primary pull-changes-btn pull-left">Pull Changes</div>
+                     <div class="btn btn-success commit-btn pull-right">Commit</div>
+                  </div>
+               </div>
+               <div class="col-xs-2">
+                  <div class="row">
+                     <div class="btn btn-primary invite-new-user pull-right">Invite A User</div>
+                  </div>
+                  <div class="row">
+                     <div class="btn btn-danger delete-workspace pull-right">Delete Workspace</div>
+                  </div>
+               </div>
+
             </div>
          </div>
       </div>

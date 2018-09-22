@@ -11,13 +11,23 @@ module.exports = function(app, sessionMiddleware) {
       sessionMiddleware(socket.request, {}, next);
    });
 
+   let users = [];
+
    io.on('connection', (socket) => {
-      socket.on('commitChanges', (params, callback) => {
+
+      socket.on('join', (params, callback) => {
          socket.join(params.workspaceId);
+         users.push(params.username);
+         console.log(`Joined room: ${users}`);
+         io.to(params.workspaceId).emit('user_joined', users);
+         //var roster = io.sockets.adapter.rooms[workspaceId].sockets;
+         //console.log(roster);
          
-         console.log(`Joined room: ${params.workspaceId}`);
-         io.to(params.workspaceId).emit('updateCode', {
-            text: params.text
+         socket.on('commitChanges', (params, callback) => {
+            io.to(params.workspaceId).emit('updateCode', {
+               text: params.text
+            });
+            callback();
          });
          callback();
       });

@@ -48,6 +48,12 @@ module.exports = function(app, passport) {
          });
       });
 
+   // To show online users
+   app.route('/username')
+      .get(isLoggedIn, function(req, res) {
+         res.send(req.user.github.username);
+      });
+
    app.route('/auth/github')   
       .get(passport.authenticate('github'), (req, res) => {
          if (process.env.NODE_ENV === 'development')

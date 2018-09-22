@@ -38,7 +38,7 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({
-      extended: true
+   extended: true
 }));
 
 routes(app, passport);

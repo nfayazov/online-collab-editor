@@ -4,6 +4,29 @@ var workspaceId = splitBySlash[splitBySlash.length - 1];
 
 var makingChanges = false;
 
+$(function () {
+   $.get('/username', function (username) {
+      console.log('Username: ' + username);
+      var params = {workspaceId: workspaceId, username: username};
+      socket.emit('join', params, function (data, err) {
+
+         if (err) {
+            alert(err);
+            window.location.href = '/';
+         }
+      })
+      $('.sidenav').append('<p>' + username + '</p>');
+   });
+});
+
+socket.on('user_joined', (users, callback) => {
+   console.log('Users joined: ' + users);
+   $('.sidenav').empty();
+   users.map(function (username) {
+      $('.sidenav').append('<p>' + username  + '</p>');
+   });
+});
+
 $('.commit-btn').on('click', function(e) {
    e.preventDefault();
 
@@ -11,7 +34,6 @@ $('.commit-btn').on('click', function(e) {
       workspace: workspaceId,
       text: $('.editor-box').val()
    }, function(text) {
-      console.log(`Commited text: ${text}`);
       var params = {
          workspaceId: workspaceId,
          text: text
@@ -23,7 +45,6 @@ $('.commit-btn').on('click', function(e) {
             window.location.href = '/';
          }
       });
-      //console.log(data);
    });
 
 });
@@ -65,7 +86,6 @@ $('.pull-changes-btn').on('click', function(e) {
    e.preventDefault();
 
    $.get('/api/pull/' + workspaceId, function(data) {
-      console.log(data)
       $('.editor-box').val(data);
    });
 })

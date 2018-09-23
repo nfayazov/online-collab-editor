@@ -6,19 +6,11 @@ textarea {
    resize: none;
 }
 
-/* #editor-box {
-   border: 2px solid black;
-} */
-
 .commited-code {
    overflow: scroll;
    border: none;
    right: 10px;
 }
-
-/* .changes {
-   display: none;
-} */
 
 .pull-changes {
    display: none;

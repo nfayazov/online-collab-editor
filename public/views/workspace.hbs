@@ -22,30 +22,30 @@
                   <h1>{{name}}</h1>
                   <h3 style="font-weight: normal">{{description}}<h3>
                </div>
-            </div>
-            <div class="row">
-               <div class="col-xs-8">
-                  <div class="row">
-                     <h3>Committed text</h2>
-                     <textarea readonly class="form-control committed-code rounded-0" rows="15">{{text}}</textarea>
-                  </div>
-                  {{!-- <div class="row">
-                     <div class="btn btn-primary changes-btn pull-right">Add Changes</div>
-                  </div> --}}
-                  <div class="row changes">
-                     {{!-- <div class="code-mirror-editor"></div> --}}
-                     <h3>Editor</h3>
-                     <textarea id="editor-box" rows="10"></textarea>
-                     <div class="btn btn-primary pull-changes-btn pull-left">Pull Changes</div>
-                     <div class="btn btn-success commit-btn pull-right">Commit</div>
-                  </div>
-               </div>
+               <div class="col-xs-4"></div>
                <div class="col-xs-2">
                   <div class="row">
                      <div class="btn btn-primary btn-block invite-new-user pull-right">Invite A User</div>
                   </div>
                   <div class="row">
                      <div class="btn btn-danger btn-block delete-workspace pull-right">Delete Workspace</div>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xs-8">
+                  <div class="row">
+                     <h3 class="committed-title">Committed text</h3>
+                     <div class="btn btn-primary hide-btn pull-right"><span id="hide-text">Hide</span></div>
+                  </div>
+                  <div class='row'>
+                     <textarea readonly class="form-control committed-code rounded-0" rows="15">{{text}}</textarea>
+                  </div>
+                  <div class="row">
+                     <h3>Editor</h3>
+                     <textarea id="editor-box" rows="10"></textarea>
+                     <div class="btn btn-primary pull-changes-btn pull-left">Pull Changes</div>
+                     <div class="btn btn-success commit-btn pull-right">Commit</div>
                   </div>
                </div>
             </div>

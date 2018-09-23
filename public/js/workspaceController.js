@@ -2,7 +2,7 @@ var socket = io();
 var splitBySlash = window.location.pathname.split('/');
 var workspaceId = splitBySlash[splitBySlash.length - 1];
 
-var makingChanges = false;
+var hidden = false;
 var username;
 var editor;
 
@@ -76,26 +76,29 @@ socket.on('updateCode', (data, callback) => {
    $('.committed-code').val(data.text);
 });
 
-// $('.changes-btn').on('click', function(e) {
-//    e.preventDefault();
-//    if (!makingChanges) {
-//       makingChanges = true;
-//       $('.changes').css('display', 'block');
-//       $(this).text("Discard changes");
-//       //myCodeMirror.refresh();
-//    } else {
-//       makingChanges = false;
-//       $('.changes').css('display', 'none');
-//       $(this).text("Add changes");
-//    }
-// });
-
 $('.pull-changes-btn').on('click', function(e) {
    e.preventDefault();
 
    let pullText = $('.committed-code').val();
    editor.setValue(pullText);
-})
+});
+
+$('.hide-btn').on('click', e => {
+   e.preventDefault();
+   var state, btn_txt;
+   if (!hidden) {
+      state = 'none';
+      btn_txt = 'Show committed code';
+      hidden = true;
+   } else {
+      state = 'block';
+      btn_txt = 'Hide';
+      hidden = false;
+   }
+   $('#hide-text').text(btn_txt);
+   $('.committed-title').css('display', state);
+   $('.committed-code').css('display', state);
+});
 
 $('.invite-new-user').on('click', function() {
    var splitBySlash = window.location.pathname.split('/');

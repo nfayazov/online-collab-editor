@@ -4,10 +4,14 @@ var workspaceId = splitBySlash[splitBySlash.length - 1];
 
 var makingChanges = false;
 var username;
+var editor;
 
 $(function () {
-   var myCodeMirror = CodeMirror.fromTextArea($('.editor-box')[0], {
-      lineNumbers : true
+   editor = CodeMirror.fromTextArea(document.getElementById('editor-box'), {
+      lineNumbers: true,
+      mode: 'javascript',
+      value: $('.committed-code').text(),
+      theme: "darcula"
    });
 
    $.get('/username', function (username) {
@@ -18,7 +22,7 @@ $(function () {
             alert(err);
             window.location.href = '/';
          }
-      })
+      });
       $('.sidenav').append('<p>' + username + '</p>');
    });
 });
@@ -35,7 +39,7 @@ $('.commit-btn').on('click', function(e) {
 
    $.post('/api/commit/', {
       workspace: workspaceId,
-      text: $('.editor-box').val()
+      text: editor.getValue()
    }, function(text) {
       var params = {
          workspaceId: workspaceId,
@@ -72,24 +76,25 @@ socket.on('updateCode', (data, callback) => {
    $('.committed-code').val(data.text);
 });
 
-$('.changes-btn').on('click', function(e) {
-   e.preventDefault();
-   if (!makingChanges) {
-      makingChanges = true;
-      $('.changes').css('display', 'block');
-      $(this).text("Discard changes");
-   } else {
-      makingChanges = false;
-      $('.changes').css('display', 'none');
-      $(this).text("Add changes");
-   }
-});
+// $('.changes-btn').on('click', function(e) {
+//    e.preventDefault();
+//    if (!makingChanges) {
+//       makingChanges = true;
+//       $('.changes').css('display', 'block');
+//       $(this).text("Discard changes");
+//       //myCodeMirror.refresh();
+//    } else {
+//       makingChanges = false;
+//       $('.changes').css('display', 'none');
+//       $(this).text("Add changes");
+//    }
+// });
 
 $('.pull-changes-btn').on('click', function(e) {
    e.preventDefault();
 
    let pullText = $('.committed-code').val();
-   $('.editor-box').val(pullText);
+   editor.setValue(pullText);
 })
 
 $('.invite-new-user').on('click', function() {

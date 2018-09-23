@@ -9,9 +9,10 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       
       <script src="/codemirror/lib/codemirror.js"></script>
-      <link rel="stylesheet" href="/codemirror/lib/codemirror.css">
+      <link rel="stylesheet" href="/codemirror/lib/codemirror.css"/>
       <script src="/codemirror/mode/javascript/javascript.js"></script>
-     </head>
+      <link rel="stylesheet" href="/codemirror/theme/darcula.css"/>
+   </head>
    <body>  
       <div class="sidenav" id="mySidenav"></div>
       <div class="main">
@@ -24,11 +25,17 @@
             </div>
             <div class="row">
                <div class="col-xs-8">
-                  <h3 style="font-style: italic">{{filename}}</h2>
-                  <textarea readonly class="form-control committed-code rounded-0" rows="15">{{text}}</textarea>
-                  <div class="btn btn-primary changes-btn pull-right">Add Changes</div>
-                  <div class="changes">
-                     <textarea class="form-control sm-textarea editor-box" rows="10">{{text}}</textarea>
+                  <div class="row">
+                     <h3>Committed text</h2>
+                     <textarea readonly class="form-control committed-code rounded-0" rows="15">{{text}}</textarea>
+                  </div>
+                  {{!-- <div class="row">
+                     <div class="btn btn-primary changes-btn pull-right">Add Changes</div>
+                  </div> --}}
+                  <div class="row changes">
+                     {{!-- <div class="code-mirror-editor"></div> --}}
+                     <h3>Editor</h3>
+                     <textarea id="editor-box" rows="10"></textarea>
                      <div class="btn btn-primary pull-changes-btn pull-left">Pull Changes</div>
                      <div class="btn btn-success commit-btn pull-right">Commit</div>
                   </div>
@@ -44,6 +51,9 @@
             </div>
          </div>
       </div>
+      <script>
+         
+      </script>
       <script type="text/javascript" src='/socket.io/socket.io.js'></script>
       <script type="text/javascript" src='/js/workspaceController.js'></script>
    </body>

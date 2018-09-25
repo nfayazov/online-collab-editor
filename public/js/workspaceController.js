@@ -39,7 +39,8 @@ $('.commit-btn').on('click', function(e) {
 
    $.post('/api/commit/', {
       workspace: workspaceId,
-      text: editor.getValue()
+      text: editor.getValue(),
+      description: $('#commit-msg').val()
    }, function(text) {
       var params = {
          workspaceId: workspaceId,

@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 let CommitSchema = new mongoose.Schema({
+   description: {
+      type: String,
+      require: true
+   },
    workspace: {
       type: mongoose.Schema.Types.ObjectId, 
       require: true

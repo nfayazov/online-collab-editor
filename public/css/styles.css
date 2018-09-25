@@ -60,5 +60,9 @@ textarea {
 
 .table-div{
    overflow: auto;
-   max-height: 500px;
+   max-height: 375px;
+}
+
+.commit-div {
+   margin: 10px 0;
 }

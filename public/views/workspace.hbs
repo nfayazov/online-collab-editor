@@ -44,8 +44,14 @@
                   <div class="row">
                      <h3>Editor</h3>
                      <textarea id="editor-box" rows="10"></textarea>
-                     <div class="btn btn-primary pull-changes-btn pull-left">Pull Changes</div>
-                     <div class="btn btn-success commit-btn pull-right">Commit</div>
+                  </div>
+                  <div class="row">
+                     <div class="col-xs-2 btn btn-primary pull-changes-btn pull-left">Pull Changes</div>
+                     <div class="col-xs-3"></div>
+                     <div class="col-xs-5 commit-div">
+                        <input id="commit-msg" type="text" class="form-control pull-right" placeholder="Enter commit message"/>
+                     </div>
+                     <div class="col-xs-2 btn btn-success commit-btn pull-right">Commit</div>
                   </div>
                </div>
                <div class="col-md-2 table-div">
@@ -57,7 +63,9 @@
                      </thead>
                      <tbody>
                         {{#each commits}}
-                           <tr><td>{{this.text}}</td></tr>
+                           {{#if this.text}}
+                              <tr><td>{{this.description}}</td></tr>
+                           {{/if}}
                         {{/each}}
                      </tbody>
                   </table>

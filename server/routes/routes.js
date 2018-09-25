@@ -136,6 +136,7 @@ module.exports = function(app, passport) {
    app.route('/api/commit/')
       .post(isLoggedIn, (req, res) => {
          let commit = new Commit({
+            description: req.body.description,
             workspace: req.body.workspace,
             text: req.body.text,
             createdAt: ts.now(),

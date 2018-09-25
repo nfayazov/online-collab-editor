@@ -22,7 +22,7 @@
                   <h1>{{name}}</h1>
                   <h3 style="font-weight: normal">{{description}}<h3>
                </div>
-               <div class="col-xs-4"></div>
+               <div class="col-xs-3"></div>
                <div class="col-xs-2">
                   <div class="row">
                      <div class="btn btn-primary btn-block invite-new-user pull-right">Invite A User</div>
@@ -33,9 +33,9 @@
                </div>
             </div>
             <div class="row">
-               <div class="col-xs-8">
+               <div class="col-xs-7">
                   <div class="row">
-                     <h3 class="committed-title">Committed text</h3>
+                     <h3 class="committed-title pull-left">Committed code</h3>
                      <div class="btn btn-primary hide-btn pull-right"><span id="hide-text">Hide</span></div>
                   </div>
                   <div class='row'>
@@ -47,6 +47,20 @@
                      <div class="btn btn-primary pull-changes-btn pull-left">Pull Changes</div>
                      <div class="btn btn-success commit-btn pull-right">Commit</div>
                   </div>
+               </div>
+               <div class="col-md-2 table-div">
+                  <table class="table table-striped table-bordered">
+                     <thead class="thead-dark">
+                        <tr>
+                           <th scope="col">Commit History</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {{#each commits}}
+                           <tr><td>{{this.text}}</td></tr>
+                        {{/each}}
+                     </tbody>
+                  </table>
                </div>
             </div>
          </div>

@@ -104,8 +104,8 @@ module.exports = function(app, passport) {
             res.render(path + 'views/workspace.hbs', { 
                name: ws.name, 
                description: ws.description, 
-               filename: ws.filename, 
-               text: lastCommit.text 
+               text: lastCommit.text,
+               commits: ws.commits 
             });
          }).catch(e => {
             res.status(404).send(e);

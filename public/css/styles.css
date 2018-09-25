@@ -57,3 +57,8 @@ textarea {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
+
+.table-div{
+   overflow: auto;
+   max-height: 500px;
+}

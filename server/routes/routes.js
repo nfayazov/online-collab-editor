@@ -101,11 +101,16 @@ module.exports = function(app, passport) {
       .get(isLoggedIn, (req, res) => {
          Workspace.findById(req.params.id).then((ws) => {
             let lastCommit = ws.commits[ws.commits.length-1];
+            /* For handlebars */
+            let commits;
+            if (ws.commits.length > 0) commits = ws.commits;
+            else commits = false;
+            
             res.render(path + 'views/workspace.hbs', { 
                name: ws.name, 
                description: ws.description, 
                text: lastCommit.text,
-               commits: ws.commits 
+               commits: commits 
             });
          }).catch(e => {
             res.status(404).send(e);
@@ -155,5 +160,11 @@ module.exports = function(app, passport) {
          }, e => {
             res.status(400).send(e);
          });
-      })
+      });
+
+   app.route('/logout')
+   .get((req, res) => {
+      req.logout();
+      res.redirect('/login');
+   });
 }

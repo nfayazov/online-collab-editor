@@ -23,14 +23,14 @@ $(function () {
             window.location.href = '/';
          }
       });
-      $('.sidenav').append('<p>' + username + '</p>');
+      $('.online-user-list').append('<p>' + username + '</p>');
    });
 });
 
 socket.on('update_users', (users, callback) => {
-   $('.sidenav').empty();
+   $('.online-user-list').empty();
    users.map(function (username) {
-      $('.sidenav').append('<p>' + username  + '</p>');
+      $('.online-user-list').append('<p>' + username  + '</p>');
    });
 });
 

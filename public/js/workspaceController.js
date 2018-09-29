@@ -37,15 +37,20 @@ socket.on('update_users', (users, callback) => {
 $('.commit-btn').on('click', function(e) {
    e.preventDefault();
 
+   let description = $('#commit-msg').val();
+
    $.post('/api/commit/', {
       workspace: workspaceId,
       text: editor.getValue(),
-      description: $('#commit-msg').val()
+      description: description
    }, function(text) {
       var params = {
          workspaceId: workspaceId,
-         text: text
+         text: text,
+         description: description, 
       };
+
+      $('#commit-msg').val('');
 
       socket.emit('commitChanges', params, function (data, err) {
          if (err) {
@@ -75,6 +80,7 @@ $('.delete-workspace').on('click', function(e) {
 
 socket.on('updateCode', (data, callback) => {
    $('.committed-code').val(data.text);
+   $('tbody').prepend('<tr><td>' + data.description + '</td></tr>');
 });
 
 $('.pull-changes-btn').on('click', function(e) {

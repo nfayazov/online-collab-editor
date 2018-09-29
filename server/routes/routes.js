@@ -110,7 +110,7 @@ module.exports = function(app, passport) {
                name: ws.name, 
                description: ws.description, 
                text: lastCommit.text,
-               commits: commits 
+               commits: commits.reverse() 
             });
          }).catch(e => {
             res.status(404).send(e);

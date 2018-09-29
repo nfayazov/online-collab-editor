@@ -22,7 +22,8 @@ module.exports = function(app, sessionMiddleware) {
          
          socket.on('commitChanges', (params, callback) => {
             io.to(params.workspaceId).emit('updateCode', {
-               text: params.text
+               text: params.text,
+               description: params.description
             });
             callback();
          });

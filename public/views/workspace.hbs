@@ -64,7 +64,7 @@
                         <tbody>
                            {{#each commits}}
                               {{#if this.text}}
-                                 <tr><td>{{this.description}}</td></tr>
+                                 <tr id="{{this._id}}" class="commit"><td>{{this.description}}</td></tr>
                               {{/if}}
                            {{/each}}
                         </tbody>

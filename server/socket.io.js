@@ -22,6 +22,7 @@ module.exports = function(app, sessionMiddleware) {
          
          socket.on('commitChanges', (params, callback) => {
             io.to(params.workspaceId).emit('updateCode', {
+               commitId: params. commitId,
                text: params.text,
                description: params.description
             });

@@ -43,10 +43,11 @@ $('.commit-btn').on('click', function(e) {
       workspace: workspaceId,
       text: editor.getValue(),
       description: description
-   }, function(text) {
+   }, function(data) {
       var params = {
          workspaceId: workspaceId,
-         text: text,
+         commitId: data.commitId,
+         text: data.text,
          description: description, 
       };
 
@@ -76,11 +77,20 @@ $('.delete-workspace').on('click', function(e) {
          // Redirect to error page
       }
    });
-})
+});
 
 socket.on('updateCode', (data, callback) => {
    $('.committed-code').val(data.text);
-   $('tbody').prepend('<tr><td>' + data.description + '</td></tr>');
+   $('tbody').prepend('<tr id="' + data.commitId + '" class="commit"><td>' + data.description + '</td></tr>');
+});
+
+$('.commit').on('click', function(e){
+   e.preventDefault();
+
+   let commitId = $(this).attr('id');
+   $.get('/api/commit/' + commitId, (commit) => {
+      $('.committed-code').val(commit.text);
+   });
 });
 
 $('.pull-changes-btn').on('click', function(e) {

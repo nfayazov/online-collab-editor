@@ -84,3 +84,7 @@ textarea {
 .commit-div {
    margin: 10px 0;
 }
+
+tr {
+   cursor: pointer;
+}

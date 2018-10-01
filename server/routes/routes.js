@@ -149,9 +149,16 @@ module.exports = function(app, passport) {
          });
          
          utils.commit(commit, req.body.workspace).then((commit) => {
-            res.send(commit.text)
+            res.send( {commitId: commit._id, text: commit.text} );
          }, e => { res.status(400).send(e)}); // TODO: show this to user
       });
+
+   app.route('/api/commit/:id')
+      .get(isLoggedIn, (req, res) => {
+         Commit.findById(req.params.id).then(commit => {
+            res.send(commit);
+         }, e => res.status(404).send(e));
+      })
 
    app.route('/api/pull/:workspaceId')
       .get(isLoggedIn, (req, res) => {

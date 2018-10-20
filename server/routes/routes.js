@@ -33,20 +33,24 @@ module.exports = function(app, passport) {
       });
       
    app.route('/profile')
-      .get(isLoggedIn, function (req, res) {
+      .get(isLoggedIn, (req, res) => {
          let profile = {
             name: req.user.github.displayName,
             username: req.user.github.username,
             avatar_url: req.user.github.avatar_url,
             bio: req.user.github.bio
          };
-         utils.getWorkspacesByGithubId(req.user.github.id).then((workspaces) => {
-            profile.workspaces = workspaces;
-            res.render(path + 'views/profile.hbs', profile);
-         }, (e) => {
-               res.status(404).send(e);
-         });
+         res.render(path + 'views/profile.hbs', profile);
       });
+
+   app.route('/profile/workspaces')
+      .get(isLoggedIn, (req, res) => {
+         utils.getWorkspacesByGithubId(req.user.github.id).then((workspaces) => {
+            res.render(path + 'views/profile-workspaces.hbs', {workspaces: workspaces});
+         }, (e) => {
+            res.status(404).send(e);
+         });
+      })
 
    // To show online users
    app.route('/username')

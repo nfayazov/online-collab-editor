@@ -1,0 +1,45 @@
+<html>
+<head>
+   <title>Live Editor</title>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <link rel="stylesheet" href="/css/styles.css" type="text/css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+   <div class="sidenav">
+      <div class="sidenav-link">
+         <a href="/profile">
+            <h2 class="sidenav-link">Profile</h2>
+         </a>
+      </div>
+      <div class="sidenav-link">
+         <a href="/logout">
+            <h2 class="sidenav-link ">Logout</h2>
+         </a>
+      </div>
+   </div>
+   <div class="main">
+      <div class="container">
+         {{#if workspaces}}
+            <h3 class="md-col-4">Workspaces</h3>
+         {{else}}
+            <h3>No workspaces found.</h3>
+         {{/if}}
+         <ul>
+            {{#each workspaces}}
+            <li>
+               <a href="/workspace/{{this._id}}">
+                  <h3>{{this.name}}</h3>
+               </a>
+            </li>
+            {{/each}}
+         </ul>
+         <a href="/new">
+            <div class="btn btn-primary new-workspace">Create New Workspace</div>
+         </a>
+      </div>
+   </div>   
+
+</body>

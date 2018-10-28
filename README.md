@@ -5,6 +5,6 @@ This online tool allows users to collaborate real-time with other users in a cod
 
 ![Profile Page](/public/img/profile.png)
 
-![Workspace View](/public/img/profile.png)
+![Workspace View](/public/img/workspace.png)
 
 [Link to website](https://pacific-bayou-60506.herokuapp.com/login)

@@ -86,7 +86,6 @@ module.exports = function(app, passport) {
          let workspace = new Workspace({
             name: req.body.name,
             description: req.body.description,
-            filename: req.body.filename,
             createdAt: ts.now(),
             createdBy: req.user.github.id,
          });

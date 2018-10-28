@@ -20,7 +20,7 @@ app.use('/css', express.static(path.join(__dirname, '../public/css')));
 app.use('/codemirror', express.static(path.join(__dirname, '../public/codemirror')));
 
 // Templating engine
-hbs.registerPartials(__dirname + '../public/views/partials');
+// hbs.registerPartials(__dirname + '../public/views/partials');
 app.set('view engine', 'hbs');
 
 // Database

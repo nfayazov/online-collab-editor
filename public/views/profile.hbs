@@ -20,7 +20,9 @@
          <div class="container">
             <div class="row">
                <img class="md-col-4" src="{{avatar_url}}" height="300" width="300"></h3>
-               <h3 class="md-col-4">Name: {{name}}</h3>
+               {{#if name}}
+                  <h3 class="md-col-4">Name: {{name}}</h3>
+               {{/if}}
                <h3 class="md-col-4">Username: {{username}}</h3>
                {{#if bio}}
                   <h3 class="md-col-4">Bio: {{bio}}</h3>

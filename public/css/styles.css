@@ -1,6 +1,16 @@
-/* .container {
-   margin-left: 200px;
-} */
+html, body {
+   height: 100%
+}
+
+.bg { 
+   background-image: url('../img/bkg.jpg');
+
+   height: 100%; 
+
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+}
 
 textarea {
    resize: none;
@@ -22,6 +32,19 @@ textarea {
 
 .login {
    margin-top: 200px;
+}
+
+#login-btn {
+   position: absolute;
+   top: 45%;
+   left: 43%;
+   color: #11374f;
+}
+
+#login-btn-mock {
+   position: absolute;
+   top: 55%;
+   left: 43%;
 }
 
 .sidenav {

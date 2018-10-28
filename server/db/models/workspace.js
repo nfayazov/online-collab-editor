@@ -7,8 +7,7 @@ let Workspace = mongoose.model('Workspace', {
       require: true
    },
    filename: { // This will be an array of files
-      type: String,
-      require: true
+      type: String
    },
    description: {
       type: String,

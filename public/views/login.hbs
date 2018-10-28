@@ -5,24 +5,19 @@
       <link rel="stylesheet" href="/css/styles.css" type="text/css">
    </head>
    <body>
-      <div class="container">
-         <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4 login">
-               <a href="/auth/github">
-                  <div class="btn btn-primary" id="login-btn">
-                     <p>LOGIN WITH GITHUB</p>
-                  </div>
-               </a>
-               {{#if dev}}
-                  <a href="/auth/mock">
-                     <div class="btn btn-primary" id="login-btn">
-                        <p>LOGIN WITH MOCK ACCOUNT</p>
-                     </div>
-                  </a>
-               {{/if}}
+      <div class="bg">
+         <a href="/auth/github">
+            <div class="btn btn-default" id="login-btn">
+               <p>LOGIN WITH GITHUB</p>
             </div>
-         </div>
+         </a>
+         {{#if dev}}
+            <a href="/auth/mock">
+               <div class="btn btn-info" id="login-btn-mock">
+                  <p>LOGIN WITH MOCK ACCOUNT</p>
+               </div>
+            </a>
+         {{/if}}
       </div>
    </body>
 </html>

@@ -7,11 +7,20 @@ const express = require('express')
       session = require('express-session'),
       passport = require('passport'),
       hbs = require('hbs'),
+      helmet = require('helmet'),
       socket = require('./socket.io');
 
 require('dotenv').load();
 
 let app = express();
+
+// Security
+app.use(helmet({
+   frameguard: {
+      action: 'deny'
+   },
+   dnsPrefetchControl: false
+}))
 
 // This simply allows us to do localhost:3000/login.html
 app.use(express.static(path.join(__dirname, '../public')));

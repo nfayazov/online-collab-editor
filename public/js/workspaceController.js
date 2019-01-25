@@ -38,6 +38,10 @@ $('.commit-btn').on('click', function(e) {
    e.preventDefault();
 
    let description = $('#commit-msg').val();
+   if (description == "") {
+      alert("Please enter commit message");
+      return;
+   }
 
    $.post('/api/commit/', {
       workspace: workspaceId,
@@ -66,12 +70,9 @@ $('.commit-btn').on('click', function(e) {
 $('.compile-btn').on('click', function(e) {
    e.preventDefault()
 
-   console.log(editor.getValue())
-
-   $.post("http://localhost:8080", {
-         code: editor.getValue()
-      }, function(data) {
-         console.log(data)
+   $.post("http://localhost:8080",
+         editor.getValue(), function(data) {
+         $("#compiler-result").html(data);
       });
 })
 

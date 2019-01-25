@@ -3,6 +3,7 @@ const ts = require('unix-timestamp');
 const Workspace = require('../db/models/workspace');
 const {Commit} = require('../db/models/commit');
 const utils = require('../utils/utils');
+const cors = require('cors');
 const ObjectId = require('mongoose').Schema.Types.ObjectId;
 
 module.exports = function(app, passport) {
@@ -101,7 +102,7 @@ module.exports = function(app, passport) {
       
    /* TODO: this needs to be its own function in utils */
    app.route('/workspace/:id')
-      .get(isLoggedIn, (req, res) => {
+      .get(isLoggedIn, cors(), (req, res) => {
          Workspace.findById(req.params.id).then((ws) => {
             let lastCommit = ws.commits[ws.commits.length-1];
             /* For handlebars */
@@ -109,6 +110,7 @@ module.exports = function(app, passport) {
             if (ws.commits.length > 0) commits = ws.commits;
             else commits = false;
             
+            res.set({'Access-Control-Allow-Origin': '*'});
             res.render(path + 'views/workspace.hbs', { 
                name: ws.name, 
                description: ws.description, 

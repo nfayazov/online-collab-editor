@@ -63,6 +63,18 @@ $('.commit-btn').on('click', function(e) {
 
 });
 
+$('.compile-btn').on('click', function(e) {
+   e.preventDefault()
+
+   console.log(editor.getValue())
+
+   $.post("http://localhost:8080", {
+         code: editor.getValue()
+      }, function(data) {
+         console.log(data)
+      });
+})
+
 // TODO: make sure you can only delete if no one else is working right now
 $('.delete-workspace').on('click', function(e) {
    e.preventDefault();
